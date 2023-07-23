@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRUDDemo.Data", "..\CRUDDem
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRUDDemo.Entity", "..\CRUDDemo.Entity\CRUDDemo.Entity.csproj", "{2BDD829E-5C3A-48FB-8574-2E9C27E4188E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseUtility", "..\BaseUtility\BaseUtility.csproj", "{2E7C3A10-12EE-44DA-AAB8-990156540A31}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{2BDD829E-5C3A-48FB-8574-2E9C27E4188E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BDD829E-5C3A-48FB-8574-2E9C27E4188E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2BDD829E-5C3A-48FB-8574-2E9C27E4188E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E7C3A10-12EE-44DA-AAB8-990156540A31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E7C3A10-12EE-44DA-AAB8-990156540A31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E7C3A10-12EE-44DA-AAB8-990156540A31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E7C3A10-12EE-44DA-AAB8-990156540A31}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

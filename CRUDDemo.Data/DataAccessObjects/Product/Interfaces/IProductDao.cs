@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BaseCore
+namespace CRUDDemo.Data.DataAccessObjects.Product.Interfaces
 {
-    public class Class1
+    public interface IProductDao
     {
     }
 }
