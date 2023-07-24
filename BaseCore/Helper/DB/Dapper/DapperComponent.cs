@@ -235,12 +235,12 @@ namespace BaseCore.Helper.DB.Dapper
         /// </summary>
         /// <typeparam name="T">通用型別</typeparam>
         /// <param name="entity">物件</param>
-        public void DeleteByEntity<T>(T entity)
+        public int DeleteByEntity<T>(T entity)
         {
             string sqlScript = ToDeleteScript(entity);
             Dictionary<string, object> paras = ToSqlParameterJustSerialNo(entity);
 
-            Execute(sqlScript, paras);
+            return Execute(sqlScript, paras);
         }
 
         /// <summary>
@@ -248,12 +248,12 @@ namespace BaseCore.Helper.DB.Dapper
         /// </summary>
         /// <typeparam name="T">通用型別</typeparam>
         /// <param name="entity">物件</param>
-        public async void DeleteByEntityAsync<T>(T entity)
+        public async Task<int> DeleteByEntityAsync<T>(T entity)
         {
             string sqlScript = ToDeleteScript(entity);
             Dictionary<string, object> paras = ToSqlParameterJustSerialNo(entity);
 
-            await ExecuteAsync(sqlScript, paras);
+            return await ExecuteAsync(sqlScript, paras);
         }
 
         /// <summary>

@@ -49,7 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\Attribute\KeyAttr.cs" />
-    <Compile Include="Base\Dao\IBaseDAO.cs" />
+    <Compile Include="Base\Impl\IBaseImpl.cs" />
     <Compile Include="Base\Entity\BaseEntity.cs" />
     <Compile Include="Base\Impl\BaseImpl.cs" />
     <Compile Include="Helper\DBHelper.cs" />
@@ -67,6 +67,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Base\Dao\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

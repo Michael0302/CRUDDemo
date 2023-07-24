@@ -39,7 +39,7 @@ namespace BaseCore.Helper
         public async Task<int> ExecuteAsync(string sql, object paras = null, int? commandTimeout = default(int?))
         {
             return await _dapperComponent.ExecuteAsync(sql, paras, commandTimeout);
-        }
+        }        
 
         #region Insert
 
@@ -74,7 +74,7 @@ namespace BaseCore.Helper
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="_EntityObject"></param>
-        public T UpdateByEntityId<T>(T _EntityObject)
+        public T UpdateByEntity<T>(T _EntityObject)
         {
             return _dapperComponent.UpdateByEntityId<T>(_EntityObject);
         }
@@ -84,7 +84,7 @@ namespace BaseCore.Helper
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="_EntityObject"></param>
-        public async Task<T> UpdateByEntityIdAsync<T>(T _EntityObject)
+        public async Task<T> UpdateByEntityAsync<T>(T _EntityObject)
         {
             return await _dapperComponent.UpdateByEntityIdAsync<T>(_EntityObject);
         }
@@ -98,9 +98,9 @@ namespace BaseCore.Helper
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="_EntityObject"></param>
-        public void DeleteByEntity<T>(T _EntityObject)
+        public int DeleteByEntity<T>(T _EntityObject)
         {
-            _dapperComponent.DeleteByEntity(_EntityObject);
+            return _dapperComponent.DeleteByEntity(_EntityObject);
         }
 
         /// <summary>
@@ -108,9 +108,9 @@ namespace BaseCore.Helper
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="_EntityObject"></param>
-        public void DeleteByEntityAsync<T>(T _EntityObject)
+        public async Task<int> DeleteByEntityAsync<T>(T _EntityObject)
         {
-            _dapperComponent.DeleteByEntityAsync(_EntityObject);
+            return await _dapperComponent.DeleteByEntityAsync(_EntityObject);
         }
 
         #endregion

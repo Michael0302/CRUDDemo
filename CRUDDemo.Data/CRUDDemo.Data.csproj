@@ -41,10 +41,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataAccessObjects\Product\Implementations\ProductDao.cs" />
-    <Compile Include="DataAccessObjects\Product\Interfaces\IProductDao.cs" />
+    <Compile Include="DataAccessObjects\Product\Implementations\ProductImpl.cs" />
+    <Compile Include="DataAccessObjects\Product\Interfaces\IProductImpl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\BaseCore\BaseCore.csproj">
+      <Project>{FFDB9749-9F8D-488B-A67E-DE1CBDED59F9}</Project>
+      <Name>BaseCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CRUDDemo.Entity\CRUDDemo.Entity.csproj">
+      <Project>{2BDD829E-5C3A-48FB-8574-2E9C27E4188E}</Project>
+      <Name>CRUDDemo.Entity</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

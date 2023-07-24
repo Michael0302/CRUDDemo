@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BaseCore.Base.Impl;
+using CRUDDemo.Entity.Product;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CRUDDemo.Data.DataAccessObjects.Product.Interfaces
 {
-    public interface IProductDao
+    public interface IProductImpl
     {
     }
 }
