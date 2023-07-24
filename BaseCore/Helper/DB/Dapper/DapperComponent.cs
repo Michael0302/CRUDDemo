@@ -4,6 +4,7 @@ using Dapper;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
@@ -25,17 +26,32 @@ namespace BaseCore.Helper.DB.Dapper
         }
 
         /// <summary>
-        /// 取得單筆Entity資料
+        /// 執行語法
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="sqlScript"></param>
-        /// <param name="paras"></param>
-        /// <returns></returns>
-        public async Task<T> GetEntityBySQLScriptAsync<T>(string sqlScript, Dictionary<string, object> paras = null)
+        /// <param name="sql">SQL字串</param>
+        /// <param name="paras">參數</param>
+        /// <param name="commandTimeout">逾時時間</param>
+        /// <returns>影響數量</returns>
+        public int Execute(string sql, object paras = null, int? commandTimeout = default(int?))
         {
-            using (SqlConnection sqlConnection = new SqlConnection(this._connectionString))
+            using (IDbConnection conn = new SqlConnection(this._connectionString))
             {
-                return await sqlConnection.QueryFirstOrDefaultAsync<T>(sqlScript, paras);
+                return conn.Execute(sql, paras, commandTimeout: commandTimeout);
+            }
+        }
+
+        /// <summary>
+        /// 執行語法
+        /// </summary>
+        /// <param name="sql">SQL字串</param>
+        /// <param name="paras">參數</param>
+        /// <param name="commandTimeout">逾時時間</param>
+        /// <returns>影響數量</returns>
+        public async Task<int> ExecuteAsync(string sql, object paras = null, int? commandTimeout = default(int?))
+        {
+            using (IDbConnection conn = new SqlConnection(this._connectionString))
+            {
+                return await conn.ExecuteAsync(sql, paras, commandTimeout: commandTimeout);
             }
         }
 
@@ -64,21 +80,6 @@ namespace BaseCore.Helper.DB.Dapper
             Dictionary<string, object> paras = ToSqlParameterForInsert(entity);
             return await GetEntityBySQLScriptAsync<T>(sqlScript, paras);
         }
-
-        /// <summary>
-        /// 取得單筆Entity資料
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="sqlScript"></param>
-        /// <param name="paras"></param>
-        /// <returns></returns>
-        public T GetEntityBySQLScript<T>(string sqlScript, Dictionary<string, object> paras = null)
-        {
-            using (SqlConnection sqlConnection = new SqlConnection(this._connectionString))
-            {
-                return sqlConnection.QueryFirstOrDefault<T>(sqlScript, paras);
-            }
-        }        
 
         /// <summary>
         /// 組SQL insert script
@@ -229,13 +230,119 @@ namespace BaseCore.Helper.DB.Dapper
 
         #region Delete
 
+        /// <summary>
+        /// 依entity的Id刪除資料
+        /// </summary>
+        /// <typeparam name="T">通用型別</typeparam>
+        /// <param name="entity">物件</param>
+        public void DeleteByEntity<T>(T entity)
+        {
+            string sqlScript = ToDeleteScript(entity);
+            Dictionary<string, object> paras = ToSqlParameterJustSerialNo(entity);
+
+            Execute(sqlScript, paras);
+        }
+
+        /// <summary>
+        /// 依entity的Id刪除資料
+        /// </summary>
+        /// <typeparam name="T">通用型別</typeparam>
+        /// <param name="entity">物件</param>
+        public async void DeleteByEntityAsync<T>(T entity)
+        {
+            string sqlScript = ToDeleteScript(entity);
+            Dictionary<string, object> paras = ToSqlParameterJustSerialNo(entity);
+
+            await ExecuteAsync(sqlScript, paras);
+        }
+
+        /// <summary>
+        /// 組SQL delete script
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        private string ToDeleteScript<T>(T entity)
+        {
+            return string.Format(@"DELETE {0} WHERE {1} = @{1}", typeof(T).Name, EntityUtility.GetFieldNameByAttributeValue(typeof(T), typeof(KeyAttr), DBdef.KEYATTR, DBdef.Id));
+        }
+
+        private Dictionary<string, object> ToSqlParameterJustSerialNo<T>(T entity)
+        {
+            Guid serialNo = (Guid)typeof(T).GetProperty(EntityUtility.GetFieldNameByAttributeValue(typeof(T), typeof(KeyAttr), DBdef.KEYATTR, DBdef.Id)).GetValue(entity);
+
+            return new Dictionary<string, object>() {
+                        { EntityUtility.GetFieldNameByAttributeValue(typeof(T), typeof(KeyAttr), DBdef.KEYATTR, DBdef.Id), serialNo }
+                    };
+        }
+
         #endregion
 
-        #region GetById
+        #region Get
+
+        /// <summary>
+        /// 取得單筆Entity資料
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="sqlScript"></param>
+        /// <param name="paras"></param>
+        /// <returns></returns>
+        public T GetEntityBySQLScript<T>(string sqlScript, Dictionary<string, object> paras = null)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(this._connectionString))
+            {
+                return sqlConnection.QueryFirstOrDefault<T>(sqlScript, paras);
+            }
+        }
+
+        /// <summary>
+        /// 取得單筆Entity資料
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="sqlScript"></param>
+        /// <param name="paras"></param>
+        /// <returns></returns>
+        public async Task<T> GetEntityBySQLScriptAsync<T>(string sqlScript, Dictionary<string, object> paras = null)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(this._connectionString))
+            {
+                return await sqlConnection.QueryFirstOrDefaultAsync<T>(sqlScript, paras);
+            }
+        }
 
         #endregion
 
         #region GetAll
+
+        /// <summary>
+        /// 依條件查詢多筆資料
+        /// </summary>
+        /// <typeparam name="T">類別</typeparam>
+        /// <param name="sqlScript">SQL</param>
+        /// <param name="paras">類別</param>
+        /// <returns>List<T></returns>
+        public IEnumerable<T> GetEntitiesBySQLScript<T>(string sqlScript, Dictionary<string, object> paras = null)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(this._connectionString))
+            {
+                return sqlConnection.Query<T>(sqlScript, paras).ToList();
+            }
+        }
+
+        /// <summary>
+        /// 依條件查詢多筆資料
+        /// </summary>
+        /// <typeparam name="T">類別</typeparam>
+        /// <param name="sqlScript">SQL</param>
+        /// <param name="paras">類別</param>
+        /// <returns>List<T></returns>
+        public async Task<IEnumerable<T>> GetEntitiesBySQLScriptAsync<T>(string sqlScript, Dictionary<string, object> paras = null)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(this._connectionString))
+            {
+                return await sqlConnection.QueryAsync<T>(sqlScript, paras);
+            }
+        }
 
         #endregion
     }
