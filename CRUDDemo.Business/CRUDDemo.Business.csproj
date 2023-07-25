@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=8.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\CRUDDemo\packages\AutoMapper.8.1.1\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -50,12 +53,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mapper\MappingProfile.cs" />
     <Compile Include="Product\Interface\IProductService.cs" />
     <Compile Include="Product\Service\ProductService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CRUDDemo.Data\CRUDDemo.Data.csproj">
+      <Project>{F3F01194-5B79-4A4C-A600-737DC52E1AE0}</Project>
+      <Name>CRUDDemo.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CRUDDemo.Entity\CRUDDemo.Entity.csproj">
+      <Project>{2BDD829E-5C3A-48FB-8574-2E9C27E4188E}</Project>
+      <Name>CRUDDemo.Entity</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
