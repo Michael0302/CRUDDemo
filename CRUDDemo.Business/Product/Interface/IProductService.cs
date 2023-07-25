@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CRUDDemo.Business
+namespace CRUDDemo.Business.Product.Interface
 {
-    public class Class1
+    public interface IProductService
     {
     }
 }
