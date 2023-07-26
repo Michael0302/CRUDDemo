@@ -96,8 +96,9 @@ namespace BaseCore.Helper.DB.Dapper
             string columnNameList = string.Join(",", fieldNames.Select(x => "[" + x + "]").ToArray());
 
             string valueList = string.Join(",", fieldNames.Select(x => "@" + x).ToArray());
+            var tableName = typeof(T).Name.Substring(0, typeof(T).Name.Length - 6);
 
-            return string.Format("Insert Into [{0}] ({1}) OUTPUT INSERTED.* VALUES ({2}) ", typeof(T).Name, columnNameList, valueList);
+            return string.Format("Insert Into [{0}] ({1}) OUTPUT INSERTED.* VALUES ({2}) ", tableName, columnNameList, valueList);
         }
         /// <summary>
         /// 取得Entity所有屬性名稱
@@ -196,7 +197,9 @@ namespace BaseCore.Helper.DB.Dapper
             var computedColumns = GetDatabaseGeneratedOptioNonColumns(typeof(T));
             string valueList = string.Join(",", EntityUtility.GetAllFieldNames<T>(false).Where(x => !computedColumns.Contains(x.ToLower())).Select(x => "[" + x + "] = " + "@" + x).ToArray());
 
-            return string.Format("Update [{0}] set {1} where [{2}] = @{2} select * from [{0}] where [{2}] = @{2}", typeof(T).Name, valueList, EntityUtility.GetFieldNameByAttributeValue(typeof(T), typeof(KeyAttr), DBdef.KEYATTR, DBdef.Id));
+            var tableName = typeof(T).Name.Substring(0, typeof(T).Name.Length - 6);
+
+            return string.Format("Update [{0}] set {1} where [{2}] = @{2} select * from [{0}] where [{2}] = @{2}", tableName, valueList, EntityUtility.GetFieldNameByAttributeValue(typeof(T), typeof(KeyAttr), DBdef.KEYATTR, DBdef.Id));
         }
 
 

@@ -21,7 +21,7 @@ namespace BaseCore.Base.Entity
         [Description("建立日期")]
         [KeyAttr("CreateDatetime")]
         [JsonConverter(typeof(ISO8601UtcDateTimeConverter))]
-        public DateTime CreateDatetime { set; get; }
+        public DateTime CreateDateTime { set; get; }
 
         [DisplayName("更新日期")]
         [Description("更新日期")]

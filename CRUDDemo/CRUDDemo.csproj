@@ -45,6 +45,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=8.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Bin\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -141,6 +145,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -182,6 +187,11 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Product\Create.cshtml" />
+    <Content Include="Views\Product\Edit.cshtml" />
+    <Content Include="Views\Product\GetAll.cshtml" />
+    <Content Include="Views\Product\GetById.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -212,6 +222,10 @@
     <ProjectReference Include="..\CRUDDemo.Data\CRUDDemo.Data.csproj">
       <Project>{F3F01194-5B79-4A4C-A600-737DC52E1AE0}</Project>
       <Name>CRUDDemo.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CRUDDemo.Entity\CRUDDemo.Entity.csproj">
+      <Project>{2BDD829E-5C3A-48FB-8574-2E9C27E4188E}</Project>
+      <Name>CRUDDemo.Entity</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

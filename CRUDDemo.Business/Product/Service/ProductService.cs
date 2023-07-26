@@ -141,9 +141,9 @@ namespace CRUDDemo.Business.Product.Service
         /// 取得多筆資料
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<ProductModel> GetAllProductAsync()
+        public async Task<IEnumerable<ProductModel>> GetAllProductAsync()
         {
-            var productEntities = _productImpl.GetAllAsync();
+            var productEntities = await _productImpl.GetAllAsync();
 
             var products = _mapper.Map<List<ProductModel>>(productEntities);
 

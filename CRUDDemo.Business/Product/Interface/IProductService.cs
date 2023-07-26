@@ -25,7 +25,7 @@ namespace CRUDDemo.Business.Product.Interface
         /// 取得多筆資料
         /// </summary>
         /// <returns></returns>
-        IEnumerable<ProductModel> GetAllProductAsync();
+        Task<IEnumerable<ProductModel>> GetAllProductAsync();
 
         /// <summary>
         /// 依Id取得單筆資料

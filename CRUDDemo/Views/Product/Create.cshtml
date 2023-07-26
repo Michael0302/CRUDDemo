@@ -1,0 +1,49 @@
+﻿@using CRUDDemo.Entity.Product
+
+@model ProductModel
+@{
+    ViewBag.Title = "Create";
+}
+
+<form action="Create" method="post">
+    <div class="row">
+        <div class="col-lg-10">
+
+            <div class="col-lg-12" style="margin-bottom:20px;">
+                <div class="col-lg-2">
+                    @Html.DisplayNameFor(x => x.ProductName)
+                </div>
+                <div class="col-lg-6">
+                    @Html.TextBoxFor(x => x.ProductName)
+                </div>
+            </div>
+
+            <div class="col-lg-12" style="margin-bottom:20px;">
+                <div class="col-lg-2">
+                    @Html.DisplayNameFor(x => x.Price)
+                </div>
+                <div class="col-lg-6">
+                    @Html.TextBoxFor(x => x.Price)
+                </div>
+            </div>
+
+            <div class="col-lg-12" style="margin-bottom:20px;">
+                <div class="col-lg-2">
+                    @Html.DisplayNameFor(x => x.Descirption)
+                </div>
+                <div class="col-lg-6">
+                    @Html.TextAreaFor(x => x.Descirption)
+                </div>
+            </div>
+
+            <div class="col-lg-12" style="margin-bottom:20px;">
+                <div class="col-lg-2">
+                    <button class="btn-primary">
+                        新增
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>

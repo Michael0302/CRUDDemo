@@ -1,0 +1,68 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container" style="padding-top:100px">
+    <div class="row">
+        <div class="col-12 col-lg-2  d-sm-flex  navbar navbar-expand-lg navbar-light align-items-start" id="backstage">           
+            <div class="collapse navbar-collapse flex-wrap" id="navbarTogglerDemo02">
+
+
+                <a class="btn mb-3 btn-block" onclick="GetAll()">全部商品</a>
+                <a class="btn mb-3 btn-block" onclick="GetById()">取得單一商品</a>
+                <a class="btn mb-3 btn-block" onclick="Create()">新增商品</a>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-10">
+
+            @*更新部分頁面*@
+            <div id="CreatePartial" hidden>
+                @Html.Partial("Create")
+            </div>
+
+            <div id="EditPartial" hidden>
+                @Html.Partial("Edit")
+            </div>
+
+            <div id="GetAllPartial" hidden>
+                @Html.Partial("GetAll")
+            </div>
+
+            <div id="GetByIdPartial" hidden>
+                @Html.Partial("GetById")
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    function HiddenAllPartial() {
+        $("#CreatePartial").attr("hidden", true);
+        $("#EditPartial").attr("hidden", true);
+        $("#GetAllPartial").attr("hidden", true);
+        $("#GetByIdPartial").attr("hidden", true);
+    }
+
+    function GetAll() {
+        HiddenAllPartial();
+        $("#GetAllPartial").removeAttr("hidden");
+    }
+
+    function Create() {
+        HiddenAllPartial();
+        $("#CreatePartial").removeAttr("hidden");
+    }
+
+    function Edit() {
+        HiddenAllPartial();
+        $("#EditPartial").removeAttr("hidden");
+    }
+
+    function GetById() {
+        HiddenAllPartial();
+        $("#GetByIdPartial").removeAttr("hidden");
+    }
+</script>
