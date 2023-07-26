@@ -5,7 +5,7 @@
     ViewBag.Title = "Create";
 }
 
-<form action="Create" method="post">
+<form action="@Url.Action("Create", "Product")" method="post">
     <div class="row">
         <div class="col-lg-10">
 
@@ -14,7 +14,7 @@
                     @Html.DisplayNameFor(x => x.ProductName)
                 </div>
                 <div class="col-lg-6">
-                    @Html.TextBoxFor(x => x.ProductName)
+                    <input id="@Html.IdFor(x => x.ProductName)" name="@Html.IdFor(x => x.ProductName)"/>
                 </div>
             </div>
 
@@ -23,7 +23,7 @@
                     @Html.DisplayNameFor(x => x.Price)
                 </div>
                 <div class="col-lg-6">
-                    @Html.TextBoxFor(x => x.Price)
+                    <input id="@Html.IdFor(x => x.Price)" name="@Html.IdFor(x => x.Price)"/>
                 </div>
             </div>
 
@@ -32,7 +32,7 @@
                     @Html.DisplayNameFor(x => x.Descirption)
                 </div>
                 <div class="col-lg-6">
-                    @Html.TextAreaFor(x => x.Descirption)
+                    <input id="@Html.IdFor(x => x.Descirption)" name="@Html.IdFor(x => x.Descirption)"/>
                 </div>
             </div>
 

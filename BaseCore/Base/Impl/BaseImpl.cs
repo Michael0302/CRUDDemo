@@ -20,7 +20,7 @@ namespace BaseCore.Base.Impl
             {
                 if (this._dbHelper == null)
                 {
-                    ConnectionString = WebConfigHelper.GetConnectionStringsByKeyName("ConnectionString");
+                    ConnectionString = WebConfigHelper.GetConnectionStringsByKeyName("connectionString");
                 }
                 return this._dbHelper;
             }
@@ -91,7 +91,8 @@ namespace BaseCore.Base.Impl
         /// <param name="id"></param>
         public void DeleteById(int id)
         {
-            var sqlScript = string.Format(@"delete {0} where Id = @Id", typeof(T).Name);
+            var tableName = typeof(T).Name.Substring(0, typeof(T).Name.Length - 6);
+            var sqlScript = string.Format(@"delete {0} where Id = @Id", tableName);
             var parms = new Dictionary<string, object>();
             parms.Add("Id", id);
 
@@ -128,7 +129,8 @@ namespace BaseCore.Base.Impl
         /// <returns></returns>
         public T GetById(int id)
         {
-            var sqlScript = string.Format(@"select * from {0} where Id = @id", typeof(T).Name);
+            var tableName = typeof(T).Name.Substring(0, typeof(T).Name.Length - 6);
+            var sqlScript = string.Format(@"select * from {0} where Id = @id", tableName);
             var parms = new Dictionary<string, object>();
             parms.Add("Id", id);
 
@@ -142,7 +144,8 @@ namespace BaseCore.Base.Impl
         /// <returns></returns>
         public async Task<T> GetByIdAsync(int id)
         {
-            var sqlScript = string.Format(@"select * from {0} where Id = @id", typeof(T).Name);
+            var tableName = typeof(T).Name.Substring(0, typeof(T).Name.Length - 6);
+            var sqlScript = string.Format(@"select * from {0} where Id = @id", tableName);
             var parms = new Dictionary<string, object>();
             parms.Add("Id", id);
 
@@ -159,7 +162,8 @@ namespace BaseCore.Base.Impl
         /// <returns></returns>
         public IEnumerable<T> GetAll()
         {
-            var sqlScript = string.Format(@"select * from {0}", typeof(T).Name);
+            var tableName = typeof(T).Name.Substring(0, typeof(T).Name.Length - 6);
+            var sqlScript = string.Format(@"select * from {0}", tableName);
             return dbHelper.GetEntitiesBySQLScript<T>(sqlScript);
         }
 
@@ -170,7 +174,8 @@ namespace BaseCore.Base.Impl
         /// <returns></returns>
         public async Task<IEnumerable<T>> GetAllAsync()
         {
-            var sqlScript = string.Format(@"select * from {0}", typeof(T).Name);
+            var tableName = typeof(T).Name.Substring(0, typeof(T).Name.Length - 6);
+            var sqlScript = string.Format(@"select * from {0}", tableName);
             return await dbHelper.GetEntitiesBySQLScriptAsync<T>(sqlScript);
         }
 

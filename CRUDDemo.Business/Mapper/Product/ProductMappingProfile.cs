@@ -6,11 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CRUDDemo.Business.Mapper
+namespace CRUDDemo.Business.Mapper.Product
 {
-    public class MappingProfile : Profile
+    public class ProductMappingProfile : Profile
     {
-        public MappingProfile()
+        public ProductMappingProfile()
         {
             CreateMap<ProductModel, ProductEntity>();
             CreateMap<ProductEntity, ProductModel>();

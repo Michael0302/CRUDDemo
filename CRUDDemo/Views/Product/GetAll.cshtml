@@ -4,6 +4,54 @@
 @{
     ViewBag.Title = "GetAll";
 }
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+</head>
 
-<h2>GetAll</h2>
+<button class="btn-primary" onclick="GetAllProduct()">更新</button>
+<table class='table table-hover'>
+    <thead class='table-dark'>
+        <tr id='showTh_All'>
+            <th>編號</th>
+            <th>商品名稱</th>
+            <th>價錢</th>
+            <th>商品描述</th>
+            <th>建立時間</th>
+            <th>更新時間</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id='showList_All'>
+    </tbody>
+</table>
 
+
+<script>
+    function GetAllProduct() {
+        $("#showList_All").html("");
+        $.ajax({
+            url: "@Url.Action("GetAll", "Product")",
+            type: "Get",
+            success: function (result) {
+                var trs = "";
+                console.log(result);
+                $.each(result, function (index, value) {
+                    var tr = "<tr></tr>";
+                    var data = `
+                    <th name="Id">${value.Id}</th>
+                    <th name="ProductName">${value.ProductName}</th>
+                    <th name="Price">${value.Price}</th>
+                    <th name="Descirption">${value.Descirption}</th>
+                    <th name="CreateDatetime">${moment(value.CreateDatetime).format("YYYY-MM-DD")}</th>
+                    <th name="UpdateDateTime">${moment(value.UpdateDateTime).format("YYYY-MM-DD")}</th>`;
+                    var row = $(tr).append(data);
+                    console.log(row);
+                    $("#showList_All").append(row);
+                })
+            },
+            error: function (xhr, status, error) {
+                console.log("Error: " + error);
+            }
+        });
+    }
+</script>

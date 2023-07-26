@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Mapper\MappingProfile.cs" />
+    <Compile Include="Mapper\Product\ProductMappingProfile.cs" />
     <Compile Include="Product\Interface\IProductService.cs" />
     <Compile Include="Product\Service\ProductService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

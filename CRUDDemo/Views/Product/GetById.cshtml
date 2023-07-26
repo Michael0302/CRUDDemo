@@ -1,7 +1,58 @@
-﻿
+﻿@using CRUDDemo.Entity.Product
+
+@model ProductModel
 @{
     ViewBag.Title = "GetById";
 }
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js" ></script>
+</head>
 
-<h2>GetById</h2>
+<label>請輸入ID</label>
+<input id="productId" />
+<button class="btn-primary" onclick="Serach()">搜尋</button>
+<table class='table table-hover'>
+    <thead class='table-dark'>
+        <tr id='showTh'>
+            <th>編號</th>
+            <th>商品名稱</th>
+            <th>價錢</th>
+            <th>商品描述</th>
+            <th>建立時間</th>
+            <th>更新時間</th>
+            <th></th>
+        </tr>
+    </thead>
+        <tbody id='showList'>
+            <tr>
+                <th name="Id"></th>
+                <th name="ProductName"></th>
+                <th name="Price"></th>
+                <th name="Descirption"></th>
+                <th name="CreateDatetime"></th>
+                <th name="UpdateDateTime"></th>
+            </tr>
+        </tbody>
+</table>
 
+<script>
+    function Serach() {
+        var productId = $("#productId").val();
+        $.ajax({
+            url: "@Url.Action("GetById", "Product")",
+            type: "Post",
+            data: { "id": productId},
+            success: function (result) {
+                $("th[name='Id']").html(result.Id);
+                $("th[name='ProductName']").html(result.ProductName);
+                $("th[name='Price']").html(result.Price);
+                $("th[name='Descirption']").html(result.Descirption);
+                $("th[name='CreateDatetime']").html(moment(result.CreateDatetime).format("YYYY-MM-DD"));
+                $("th[name='UpdateDateTime']").html(moment(result.UpdateDateTime).format("YYYY-MM-DD"));
+            },
+            error: function (xhr, status, error) {
+                console.log("Error: " + error);
+            }
+        });
+    }
+</script>

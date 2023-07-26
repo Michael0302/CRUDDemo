@@ -36,7 +36,7 @@ namespace CRUDDemo.Controllers
         {
             var result = await _productService.InsertProductAsync(productModel);
 
-            return View(result);
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -66,14 +66,20 @@ namespace CRUDDemo.Controllers
         public async Task<ActionResult> GetAll()
         {
             var result = await _productService.GetAllProductAsync();
-            return View(result);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
+        public ActionResult GetById()
+        {
+            return View();
+        }
+
+        [HttpPost]
         public async Task<ActionResult> GetById(int id)
         {
             var result = await _productService.GetProductByIdAsync(id);
-            return View(result);
+            return Json(result);
         }
     }
 }

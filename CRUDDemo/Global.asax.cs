@@ -8,12 +8,14 @@ using CRUDDemo.Entity.Product;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Unity;
 using Unity.AspNet.Mvc;
+using Unity.RegistrationByConvention;
 
 namespace CRUDDemo
 {
@@ -33,16 +35,37 @@ namespace CRUDDemo
             container.RegisterType<IProductImpl, ProductImpl>();
             container.RegisterType<IProductService, ProductService>();
 
-            //// 註冊 AutoMapper 的映射配置
-            Mapper.Initialize(cfg =>
+            #region AutoMapping
+
+            var type = typeof(Profile);
+            var businessMappingProfileDll = Assembly.Load("CRUDDemo.Business");
+
+            //// Load CRUDDemo.Business 的 MappingProfile
+            var businessMappingProfiles = AllClasses.FromAssemblies(businessMappingProfileDll).Where(type.IsAssignableFrom).ToList();
+
+            var webMappingProfileDll = Assembly.Load("CRUDDemo");
+
+            //// Load CRUDDemo 的 MappingProfile
+            var webMappingProfiles = AllClasses.FromAssemblies(webMappingProfileDll).Where(type.IsAssignableFrom).ToList();
+
+            var mapperConfig = new MapperConfiguration(config =>
             {
-                cfg.CreateMap<ProductModel, ProductEntity>();
-                cfg.CreateMap<ProductEntity, ProductModel>();
+                foreach (var profile in businessMappingProfiles)
+                {
+                    config.AddProfile(profile);
+                }
+
+                foreach (var profile in webMappingProfiles)
+                {
+                    config.AddProfile(profile);
+                }
             });
 
-            // 註冊 IMapper 介面，使用 AutoMapper 的實例
-            container.RegisterInstance(Mapper.Instance);
+            var mapper = mapperConfig.CreateMapper();
 
+            container.RegisterInstance(mapper);
+
+            #endregion
 
             // 將 Unity 容器設定為 MVC 的預設依賴解析器
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
