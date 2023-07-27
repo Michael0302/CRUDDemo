@@ -62,6 +62,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BaseCore\BaseCore.csproj">
+      <Project>{FFDB9749-9F8D-488B-A67E-DE1CBDED59F9}</Project>
+      <Name>BaseCore</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CRUDDemo.Data\CRUDDemo.Data.csproj">
       <Project>{F3F01194-5B79-4A4C-A600-737DC52E1AE0}</Project>
       <Name>CRUDDemo.Data</Name>
