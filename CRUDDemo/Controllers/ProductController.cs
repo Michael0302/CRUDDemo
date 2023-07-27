@@ -39,19 +39,12 @@ namespace CRUDDemo.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
-        public async Task<ActionResult> Edit(int id)
-        {
-            var result = await _productService.GetProductByIdAsync(id);
-            return View(result);
-        }
-
         [HttpPost]
         public async Task<ActionResult> Edit(ProductModel productModel)
         {
             var result = await _productService.UpdateProductAsync(productModel);
 
-            return View(result);
+            return Json(result);
         }
 
         [HttpPost]

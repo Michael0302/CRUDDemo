@@ -105,7 +105,7 @@ namespace BaseCore.Helper.DB.Dapper
         /// </summary>
         /// <param name="entityType"></param>
         /// <returns></returns>
-        private List<string> GetDatabaseGeneratedOptioNonColumns(Type entityType)
+        private List<string> GetDatabaseGeneratedOptioNonColumns(Type entityType, bool isUpdate = false)
         {
             var computedColumns = new List<string>();
 
@@ -124,6 +124,11 @@ namespace BaseCore.Helper.DB.Dapper
                             computedColumns.Add(propName.ToLower());
                         }
                     }
+                }
+                if (isUpdate && prop.Name == DBdef.CREATE_DATE_TIME)
+                {
+                    string propName = prop.Name;
+                    computedColumns.Add(propName.ToLower());
                 }
             }
 
@@ -194,7 +199,7 @@ namespace BaseCore.Helper.DB.Dapper
         /// <returns></returns>
         private string ToUpdateScriptWithReturn<T>(T entity, string keyName)
         {
-            var computedColumns = GetDatabaseGeneratedOptioNonColumns(typeof(T));
+            var computedColumns = GetDatabaseGeneratedOptioNonColumns(typeof(T), true);
             string valueList = string.Join(",", EntityUtility.GetAllFieldNames<T>(false).Where(x => !computedColumns.Contains(x.ToLower())).Select(x => "[" + x + "] = " + "@" + x).ToArray());
 
             var tableName = typeof(T).Name.Substring(0, typeof(T).Name.Length - 6);
@@ -214,7 +219,7 @@ namespace BaseCore.Helper.DB.Dapper
                     object value = p.GetValue(entity);
 
                     //更新時間
-                    if (p.Name.ToUpper().Equals(EntityUtility.GetFieldNameByAttributeValue(typeof(T), typeof(KeyAttr), DBdef.KEYATTR, DBdef.UPDATE_DATE_TIME).ToUpper()) && ((DateTime)value).Year == 1)
+                    if (p.Name.ToUpper().Equals(EntityUtility.GetFieldNameByAttributeValue(typeof(T), typeof(KeyAttr), DBdef.KEYATTR, DBdef.UPDATE_DATE_TIME).ToUpper()))
                     {
                         p.SetValue(entity, DateTime.UtcNow);
                     }

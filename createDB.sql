@@ -23,7 +23,7 @@ drop table if exists Product
 create table Product(
 Id int identity(1,1) primary key,
 ProductName nvarchar(200) not null,
-Descirption nvarchar(500) not null,
+Description nvarchar(500) not null,
 Price decimal(10,2) not null,
 CreateDateTime datetime not null,
 UpdateDateTime datetime not null

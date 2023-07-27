@@ -22,10 +22,6 @@
                 @Html.Partial("Create")
             </div>
 
-            <div id="EditPartial" hidden>
-                @Html.Partial("Edit")
-            </div>
-
             <div id="GetAllPartial" hidden>
                 @Html.Partial("GetAll")
             </div>
@@ -54,11 +50,6 @@
     function Create() {
         HiddenAllPartial();
         $("#CreatePartial").removeAttr("hidden");
-    }
-
-    function Edit() {
-        HiddenAllPartial();
-        $("#EditPartial").removeAttr("hidden");
     }
 
     function GetById() {

@@ -16,7 +16,7 @@ namespace CRUDDemo.Entity.Product
         public string ProductName { get; set; }
 
         [Display(Name = "描述")]
-        public string Descirption { get; set; }
+        public string Description { get; set; }
 
         [Display(Name = "價錢")]
         public decimal Price { get; set; }
