@@ -5,35 +5,92 @@
     ViewBag.Title = "GetById";
 }
 <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 </head>
 
-<label>請輸入ID</label>
-<input id="productId" />
-<button class="btn-primary" onclick="Serach()">搜尋</button>
-<table class='table table-hover'>
-    <thead class='table-dark'>
-        <tr id='showTh'>
-            <th>編號</th>
-            <th>商品名稱</th>
-            <th>價錢</th>
-            <th>商品描述</th>
-            <th>建立時間</th>
-            <th>更新時間</th>
-            <th></th>
-        </tr>
-    </thead>
-        <tbody id='showList'>
-            <tr>
-                <th name="Id"></th>
-                <th name="ProductName"></th>
-                <th name="Price"></th>
-                <th name="Descirption"></th>
-                <th name="CreateDatetime"></th>
-                <th name="UpdateDateTime"></th>
-            </tr>
-        </tbody>
-</table>
+<div style="margin-bottom:20px;">
+    <label>請輸入ID</label>
+    <input id="productId" />
+    <button class="btn-primary" onclick="Serach()">搜尋</button>
+</div>
+
+<div class="row">
+    <div class="col-lg-10">
+
+        <div class="col-lg-12" style="margin-bottom:20px;">
+            <div class="col-lg-2">
+                @Html.DisplayNameFor(x => x.Id)
+            </div>
+            <div class="col-lg-6">
+                <input name="edit_Id" readonly />
+            </div>
+        </div>
+
+        <div class="col-lg-12" style="margin-bottom:20px;">
+            <div class="col-lg-2">
+                @Html.DisplayNameFor(x => x.ProductName)
+            </div>
+            <div class="col-lg-6">
+                <input name="edit_ProductName" />
+            </div>
+        </div>
+
+        <div class="col-lg-12" style="margin-bottom:20px;">
+            <div class="col-lg-2">
+                @Html.DisplayNameFor(x => x.Price)
+            </div>
+            <div class="col-lg-6">
+                <input name="edit_Price" type="number" />
+            </div>
+        </div>
+
+        <div class="col-lg-12" style="margin-bottom:20px;">
+            <div class="col-lg-2">
+                @Html.DisplayNameFor(x => x.Descirption)
+            </div>
+            <div class="col-lg-6">
+                <input name="edit_Descirption" />
+            </div>
+        </div>
+
+        <div class="col-lg-12" style="margin-bottom:20px;">
+            <div class="col-lg-2">
+                @Html.DisplayNameFor(x => x.CreateDatetime)
+            </div>
+            <div class="col-lg-6">
+                <input name="edit_CreateDatetime" readonly />
+            </div>
+        </div>
+
+        <div class="col-lg-12" style="margin-bottom:20px;">
+            <div class="col-lg-2">
+                @Html.DisplayNameFor(x => x.UpdateDateTime)
+            </div>
+            <div class="col-lg-6">
+                <input name="edit_UpdateDateTime" readonly />
+            </div>
+        </div>
+
+        <div class="row justify-content-between">
+            <div class="col-lg-3" style="margin-bottom:20px;">
+                <div class="col-lg-6">
+                    <button class="btn-primary" onclick="Edit()">
+                        編輯
+                    </button>
+                </div>
+            </div>
+
+            <div class="col-lg-3" style="margin-bottom:20px;">
+                <div class="col-lg-6">
+                    <button class="btn-danger" onclick="Delete()">
+                        刪除
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
 
 <script>
     function Serach() {
@@ -43,12 +100,64 @@
             type: "Post",
             data: { "id": productId},
             success: function (result) {
-                $("th[name='Id']").html(result.Id);
-                $("th[name='ProductName']").html(result.ProductName);
-                $("th[name='Price']").html(result.Price);
-                $("th[name='Descirption']").html(result.Descirption);
-                $("th[name='CreateDatetime']").html(moment(result.CreateDatetime).format("YYYY-MM-DD"));
-                $("th[name='UpdateDateTime']").html(moment(result.UpdateDateTime).format("YYYY-MM-DD"));
+                $("input[name='edit_Id']").html(result.Id);
+                $("input[name='edit_ProductName']").html(result.ProductName);
+                $("input[name='edit_Price']").html(result.Price);
+                $("input[name='edit_Descirption']").html(result.Descirption);
+                $("input[name='edit_CreateDatetime']").html(moment(result.CreateDatetime).format("YYYY-MM-DD"));
+                $("input[name='edit_UpdateDateTime']").html(moment(result.UpdateDateTime).format("YYYY-MM-DD"));
+            },
+            error: function (xhr, status, error) {
+                console.log("Error: " + error);
+            }
+        });
+    }
+
+    function Edit() {
+        var id = $("input[name='edit_Id']").val();
+        var productName = $("input[name='edit_ProductName']").val();
+        var price = $("input[name='edit_Price']").val();
+        var descirption = $("input[name='edit_Descirption']").val();
+        var createDatetime = $("input[name='edit_CreateDatetime']").val();
+        var updateDateTime = $("input[name='edit_UpdateDateTime']").val();
+        var productModel = {
+            "Id" : id,
+            "ProductName" : productName,
+            "Price" : price,
+            "Description" : descirption,
+            "CreateDatetime" : createDatetime,
+            "UpdateDateTime" : updateDateTime
+        };
+
+        $.ajax({
+            url: "@Url.Action("Edit", "Product")",
+            type: "Post",
+            data: productModel,
+            success: function (result) {
+                $("input[name='edit_Id']").html(result.Id);
+                $("input[name='edit_ProductName']").html(result.ProductName);
+                $("input[name='edit_Price']").html(result.Price);
+                $("input[name='edit_Descirption']").html(result.Descirption);
+                $("input[name='edit_CreateDatetime']").html(moment(result.CreateDatetime).format("YYYY-MM-DD"));
+                $("input[name='edit_UpdateDateTime']").html(moment(result.UpdateDateTime).format("YYYY-MM-DD"));
+                alert("編輯成功");
+            },
+            error: function (xhr, status, error) {
+                console.log("Error: " + error);
+            }
+        });
+    }
+
+    function Delete() {
+        var id = $("input[name='edit_Id']").val();
+
+        $.ajax({
+            url: "@Url.Action("Delete", "Product")",
+            type: "Post",
+            data: { "id": productId },
+            success: function (result) {
+                alert("刪除成功");
+                window.location.reload();
             },
             error: function (xhr, status, error) {
                 console.log("Error: " + error);
